@@ -6,10 +6,6 @@ const router = express.Router();
 //Bring in the User Models
 const User = require('../../models/User');
 
-//Test Route
-router.get('/test', (req, res) => res.json({
-    msg: 'Users api works!'
-}));
 
 //@route1   POST   api/users/resister
 //@desc     This route registers the new user

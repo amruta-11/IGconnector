@@ -6,10 +6,6 @@ const Schema = mongoose.Schema;
 
 //Defining schema using json
 const UserSchema = new Schema({
-    name : {
-        type: String,
-        required: true
-    },
     email : {
         type: String,
         required: true
@@ -17,9 +13,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    avatar:{
-        type: String
     },
     date:{
         type: Date,
@@ -30,4 +23,4 @@ const UserSchema = new Schema({
 //User is an internal name & if anyones want to call that file they can call .User
 //usertable = the name of the table in MongoDB
 //UserSchema = will be used to create the usertable
-module.exports = User = mongoose.model('userstable', UserSchema)
+module.exports = User = mongoose.model('userTable', UserSchema)

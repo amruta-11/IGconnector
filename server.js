@@ -9,6 +9,8 @@ const port = 5600;
 
 //If we write the code to body-parse at server.js it will provide all the apis parsed data(json or key: value)
 const bodyparser = require('body-parser');
+
+
 //body parser middleware
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
