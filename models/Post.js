@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     userId: {
-        type:Schema.ObjectId, 
-        ref:'UserSchema',
+        type: Schema.Types.ObjectId, 
+        ref: 'userTable',
         required: true    
     },
 
@@ -29,20 +29,20 @@ const PostSchema = new Schema({
         required: true
     },
     likes: [{
-        type: Schema.ObjectId,
-        ref: 'UserSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'userTable'
     }],
     tags: [{
-        type: Schema.ObjectId,
-        ref: 'UserSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'userTable'
     }],
     createdAt: {
         type: Date,
         default: Date.now
     },
     comments: [{
-        type: Schema.ObjectId,
-        ref: 'CommentSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'commentTable'
     }]
 });
 

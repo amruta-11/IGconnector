@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const post = require('./routes/api/post');
+const bodyparser = require('body-parser');
+const passport = require('passport');
 
 const app = express();
 const port = 5600;
 
-//If we write the code to body-parse at server.js it will provide all the apis parsed data(json or key: value)
-const bodyparser = require('body-parser');
-
+//Passport Middleware
+app.use(passport.initialize());
+require('./config/passport')(passport); //Import passport function & invoke it
 
 //body parser middleware
 app.use(bodyparser.urlencoded({extended: false}));
@@ -25,9 +27,6 @@ mongoose
     .then(() => console.log('MongoDB Connected!'))
     .catch(err => console.log(err));
    
-//FirstRoute
-app.get('/', (req, res) => res.send('Hello World'));
-
 //UsersRoute-Use Route: Whenever users comes to this address the router will take it to another JS file
 app.use("/api/users", users);
 //ProfileRoute

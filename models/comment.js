@@ -11,12 +11,12 @@ const CommentSchema = new Schema({
         default: Date.now
     },
     postId: {
-        type: Schema.ObjectId,
-        ref: 'PostSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'postTable'
     },
     likes: [{
-        type: Schema.ObjectId,
-        ref: 'UserSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'userTable'
     }],
 });
 

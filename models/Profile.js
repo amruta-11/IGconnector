@@ -8,8 +8,8 @@ const ProfileSchema = new Schema({
     // Schema.ObjectId - Datatype for document ID
 
     userId: {
-        type:Schema.ObjectId, 
-        ref:'UserSchema',
+        type: Schema.Types.ObjectId, 
+        ref: 'userTable',
         required: true    
     },
     name: {
@@ -29,18 +29,17 @@ const ProfileSchema = new Schema({
         required: true
     },
     followers: [{
-        type: Schema.ObjectId,
-        ref: 'UserSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'userTable'
     }],
     following: [{
-        type: Schema.ObjectId,
-        ref: 'UserSchema'
+        type: Schema.Types.ObjectId,
+        ref: 'userTable'
     }],
     isPrivate: {
         type: Boolean,
         required: true
     }
-   
 });
 
 
