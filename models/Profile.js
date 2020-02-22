@@ -12,22 +12,14 @@ const ProfileSchema = new Schema({
         ref: 'userTable',
         required: true    
     },
-    name: {
-        type: String,
-        required: true
-    },
     bio: {
         type: String,
-        required: true
+        required: false
     },
     profilepic: {
         type: String
     },
-    // userName will be unique for each user
-    userName: {
-        type: String,
-        required: true
-    },
+
     followers: [{
         type: Schema.Types.ObjectId,
         ref: 'userTable'
@@ -39,9 +31,11 @@ const ProfileSchema = new Schema({
     isPrivate: {
         type: Boolean,
         required: true
+    },
+    website: {
+        type: String
     }
 });
-
 
 //Profile is an internal name & if anyone wants to call that file they can call .Profile
 //profileTable = the name of the table in MongoDB

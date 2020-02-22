@@ -3,6 +3,7 @@ const keys = require('../../config/keys');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 
 //passport for verifying the token
 const passport = require('passport');
@@ -13,19 +14,25 @@ const bcrypt = require('bcryptjs');
 //Install gravatar library & use it for avatar images
 const gravatar = require ('gravatar');
 
+const validateRegisterInput = require('../../validation/register');
+
 
 //@route1   POST   api/users/register
 //@desc     This route registers the new user
 //@access   public
 router.post('/register', (req, res) => {
 
-//checking mongoDB if that email address already exists, if yes then return error message
+    const { errors, isValid } = validateRegisterInput(req.body);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
-    User.findOne({email: req.body.email})
+    //checking mongoDB if that email address already exists, if yes then return error message
+    User.findOne({ $or: [ {email: req.body.email}, {username: req.body.username} ]})
         .then(user => {
             if (user){
                 return res.status(400).json({
-                    email: 'Email already exists'
+                    msg: 'Email or Username already exists'
                 })
             } else {
                 const avatar = gravatar.url(req.body.email, {
@@ -37,6 +44,7 @@ router.post('/register', (req, res) => {
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
+                    username: req.body.username,
                     avatar,
                     password: req.body.password
                 });
@@ -47,12 +55,24 @@ router.post('/register', (req, res) => {
                         if (err) throw err;
                         newUser.password = hash;
                         newUser.save()
-                        .then(user => res.json(user))
+                        .then(user => {
+
+                            //Create an empty profile immediately after registering new user
+                            const newProfile = new Profile({
+                                followers: [],
+                                following: [],
+                                userId: user._id,
+                                isPrivate: false,
+                                
+                            });
+                            newProfile.save()
+                            .then(profile => res.json(user))
+                        })
                         .catch(err => console.log(err));
                     });
 
                 });
-               
+                
             }
         })
         .catch(err => console.log(err));

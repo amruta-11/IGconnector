@@ -6,13 +6,27 @@ const Schema = mongoose.Schema;
 
 //Defining schema using json
 const UserSchema = new Schema({
+
+    // Email will be unique for each user
     email : {
+        type: String,
+        required: true
+    },
+    // username will be unique for each user
+    username: {
+        type: String,
+        required: true
+    },
+    name : {
         type: String,
         required: true
     },
     password: {
         type: String,
         required: true
+    },
+    avatar:{
+        type: String
     },
     date:{
         type: Date,

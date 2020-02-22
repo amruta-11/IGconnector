@@ -7,7 +7,6 @@ const PostSchema = new Schema({
         ref: 'userTable',
         required: true    
     },
-
     //We are storing co-ordinates only & will be using OpenCage API to get city name
     location: {
         type: {
@@ -26,7 +25,7 @@ const PostSchema = new Schema({
     },
     content:  {
         type: String, 
-        required: true
+        required: false
     },
     likes: [{
         type: Schema.Types.ObjectId,

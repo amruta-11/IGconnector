@@ -12,7 +12,8 @@ const CommentSchema = new Schema({
     },
     postId: {
         type: Schema.Types.ObjectId,
-        ref: 'postTable'
+        ref: 'postTable',
+        required: true
     },
     likes: [{
         type: Schema.Types.ObjectId,
