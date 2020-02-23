@@ -5,8 +5,8 @@ function validateRegisterInput(data){
     let errors = {};
 
     // Initially assume that data is valid. Later set this variable to false as we go on with validating different fields.
-
     let isValid = true;
+
 //Name
     if (validator.isLength(data.name, {min: 4, max: 30}) == false){
         errors.name = 'Name must be between 4 and 30 characters';

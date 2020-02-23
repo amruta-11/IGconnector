@@ -1,5 +1,4 @@
 const validator = require('validator');
-const passValid = require('password-validator')
 
 function validateProfileInput(data){
     let errors = {};

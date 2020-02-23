@@ -15,6 +15,7 @@ const bcrypt = require('bcryptjs');
 const gravatar = require ('gravatar');
 
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 
 //@route1   POST   api/users/register
@@ -84,6 +85,12 @@ router.post('/register', (req, res) => {
 //@access   public
 
 router.post('/login', (req, res) => {
+
+    const { errors, isValid } = validateLoginInput(req.body);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 

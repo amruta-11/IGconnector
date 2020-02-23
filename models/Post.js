@@ -12,12 +12,13 @@ const PostSchema = new Schema({
         type: {
           type: String,
           enum: ['Point'],
-          required: true
+          //required: true
         },
         coordinates: {
           type: [Number], // []Array containing 1.longitute & 2.latitude
-          required: true
-        }
+          //required: true
+        },
+        required: false
     },
     imageURL: {
         type: String, 
@@ -31,11 +32,13 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userTable'
     }],
+
     tags: [{
         type: Schema.Types.ObjectId,
         ref: 'userTable'
     }],
-    createdAt: {
+
+    date: {
         type: Date,
         default: Date.now
     },
