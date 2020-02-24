@@ -15,10 +15,6 @@ const CommentSchema = new Schema({
         ref: 'postTable',
         required: true
     },
-    likes: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userTable'
-    }],
 });
 
 module.exports = IGComment = mongoose.model('commentTable', CommentSchema);

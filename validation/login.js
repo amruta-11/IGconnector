@@ -1,4 +1,4 @@
-const Validator = require('validator');
+const validator = require('validator');
 const passValid = require('password-validator');
 
 
