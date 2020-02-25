@@ -6,6 +6,11 @@ const CommentSchema = new Schema({
         type: String,
         required: true
     },
+    userId: {
+        type: Schema.Types.ObjectId, 
+        ref: 'userTable',
+        required: true    
+    },
     createdAt: {
         type: Date,
         default: Date.now

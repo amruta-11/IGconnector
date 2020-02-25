@@ -5,6 +5,7 @@ const passport = require('passport');
 const User = require('../../models/User')
 const Post = require('../../models/Post');
 const validatePostInput = require('../../validation/post')
+const Comment = require('../../models/Comment')
 
 //Tag Validation Function - Do not use this function it returns empty userIds array
 function validateTags(data) {
@@ -39,7 +40,7 @@ function validateTags(data) {
 router.get('/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
-        Post.find({userId: user._id})
+        Post.find({userId: req.user._id})
         .sort({ date: -1 })
         .then(posts => res.json(posts))
         .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
@@ -88,7 +89,7 @@ router.post(
       
       const newPost = new Post({
         userId: req.user._id,
-        content: req.body.text,
+        content: req.body.content,
         imageURL: req.body.imageURL,
         likes: [],
         tags: [],
@@ -167,7 +168,7 @@ router.post(
           } else {
             // Remove user id from likes array
             for(var i = 0; i < post.likes.length; i++) { 
-              if (post.likes[i] === req.user.id) {
+              if (post.likes[i].toString() === req.user.id) {
                 post.likes.splice(i, 1);
               }
             }
@@ -178,15 +179,49 @@ router.post(
   }
 );
 
-// @route   POST api/posts/comment/:postId
+// @route   POST api/post/comment/:postId
 // @desc    Add comment to post
 // @access  Private
+router.post(
+  '/comment/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
 
-// @route   DELETE api/posts/comment/:id/:comment_id
-// @desc    Remove comment from post
+    Post.findById(req.params.id)
+      .then(post => {
+        
+        const newComment = new Comment ({
+          content: req.body.content,
+          userId: req.user._id,
+          postId: req.params.id
+        });
+        newComment.save().then(comment => res.json(comment));
+      })
+      .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+  }
+);
+
+// @route   DELETE api/post/comment/:commentId
+// @desc    Remove comment from post using CommentID
 // @access  Private
 
-
+router.delete(
+  '/comment/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Comment.findById(req.params.id)
+    .then(comment => {
+      if (comment.userId.toString() !== req.user.id) {
+        return res
+          .status(401)
+          .json({ notauthorized: 'User not authorized' });
+      }
+      // Delete
+      comment.remove().then(() => res.json({ success: true }));
+    })
+    .catch(err => res.status(404).json({ commentnotfound: 'No comment found' })); 
+}
+);
 
 
 module.exports = router;
