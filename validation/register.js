@@ -1,5 +1,6 @@
 const validator = require('validator');
-const passValid = require('password-validator')
+const passValid = require('password-validator');
+const isEmpty = require('./isEmpty');
 
 function validateRegisterInput(data){
     let errors = {};
@@ -8,23 +9,37 @@ function validateRegisterInput(data){
     let isValid = true;
 
 //Name
-    if (validator.isLength(data.name, {min: 4, max: 30}) == false){
-        errors.name = 'Name must be between 4 and 30 characters';
+    if (isEmpty(data.name)){
+        errors.name = 'Name field is required';
         isValid = false;
     }
-//Name
-    if (validator.isAlpha(data.name) == false){
-        errors.name = 'Name must not contain special characters or numbers';
-        isValid = false;
+    else {
+        if (validator.isLength(data.name, {min: 4, max: 30}) == false){
+            errors.name = 'Name must be between 4 and 30 characters';
+            isValid = false;
+        }
+        if (validator.isAlpha(data.name) == false){
+            errors.name = 'Name must not contain special characters or numbers';
+            isValid = false;
+        }
     }
+
 //Email
-    if (validator.isEmail(data.email) == false){
+    if (isEmpty(data.email)){
+        errors.email = 'Email field is required';
+        isValid = false;
+    } 
+    else if (validator.isEmail(data.email) == false){
         errors.email = 'Invalid Email Id';
         isValid = false;
     }
 //Username
-    if (validator.isLength(data.username, {min: 2, max: 10}) == false){
-        errors.username = 'Name must be between 2 and 10 characters';
+    if (isEmpty(data.username)){
+        errors.username = 'Username field is required';
+        isValid = false;
+    } 
+    else if (validator.isLength(data.username, {min: 2, max: 10}) == false){
+        errors.username = 'Username must be between 2 and 10 characters';
         isValid = false;
     }
 

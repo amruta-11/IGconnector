@@ -7,32 +7,6 @@ const Post = require('../../models/Post');
 const validatePostInput = require('../../validation/post')
 const Comment = require('../../models/Comment')
 
-//Tag Validation Function - Do not use this function it returns empty userIds array
-function validateTags(data) {
-    let tagErrors = {};
-    let isTagsValid = true;
-
-    if (data.tags.length === 0) {
-        return { tagErrors, isTagsValid };
-    }
-    userIds = [];
-    for (i = 0; i < data.tags.length; i++) {
-        // get username from tags array corresponding to current i
-        currentuser = data.tags[i];
-        // findOne user by that username
-        User.findOne({username: currentuser})
-        .then(user => {
-            if (!user) {
-                tagErrors.tags = 'Invalid tag ' + currentuser;
-                isTagsValid = false;
-            } else {
-                userIds.push(user._id);
-            }
-        })
-        .catch(err => console.log(err));
-    }
-    return { tagErrors, isTagsValid };
-}
 
 // @route  GET api/posts
 // @desc    Get current users posts
@@ -46,10 +20,10 @@ router.get('/',
         .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
   });
 
+
 // @route   GET api/posts/username/:username
 // @desc    Get other users posts
 // @access  Private
-
 router.get('/username/:username',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
@@ -77,7 +51,6 @@ router.get('/username/:username',
 // @route   POST api/post
 // @desc    Create post for current user
 // @access  Private
-
 router.post(
     '/',
     passport.authenticate('jwt', { session: false }),
@@ -98,6 +71,7 @@ router.post(
       newPost.save().then(post => res.json(post));
     }
   );
+
 
 // @route   DELETE api/post/:postId
 // @desc    Delete post by postId
@@ -122,6 +96,7 @@ router.delete(
     }
   );
 
+
 // @route   POST api/posts/like/:postId
 // @desc    Like post
 // @access  Private
@@ -132,7 +107,7 @@ router.post(
       Post.findById(req.params.id)
         .then(post => {
           if (
-            post.likes.filter(likedUserId => likedUserId.toString() === req.user.id)
+            post.likes.filter(likedUserId => likedUserId.equals(req.user.id))
               .length > 0
           ) {
             return res
@@ -159,7 +134,7 @@ router.post(
 
       Post.findById(req.params.id)
         .then(post => {
-          var likedUsersMathcingCurrentUser = post.likes.filter(likedUserId => likedUserId.toString() === req.user.id);
+          var likedUsersMathcingCurrentUser = post.likes.filter(likedUserId => likedUserId.equals(req.user.id));
 
           if (likedUsersMathcingCurrentUser.length === 0) {
             return res
@@ -168,14 +143,91 @@ router.post(
           } else {
             // Remove user id from likes array
             for(var i = 0; i < post.likes.length; i++) { 
-              if (post.likes[i].toString() === req.user.id) {
+              if (post.likes[i].equals(req.user.id)) {
                 post.likes.splice(i, 1);
               }
             }
             post.save().then(post => res.json(post));
           }
         })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+        .catch(err => res.status(404).json({ msg: 'Error while finding Post' }));
+  }
+);
+
+
+// @route   POST api/posts/tag/:postId
+// @desc    Tag user in post
+// @access  Private
+router.post(
+  '/tag/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+    .then(post => {
+      if (post) {
+        User.findOne({username: req.body.username})
+        .then(user => {
+          if (user) {
+            for (i = 0; i < post.tags.length; i++) {
+                var taggedUserId = post.tags[i];
+                if (taggedUserId.equals(user.id)) {
+                  return res
+                  .status(400)
+                  .json({ msg: 'User is already tagged in the post' });    
+                } 
+            }
+            post.tags.unshift(user._id);
+            post.save().then(post => res.json(post));
+          } else {
+            return res.status(400).json({ msg: 'User to be tagged not found' });
+          }
+        })
+        .catch(err => res.status(404).json({ msg: 'Error while finding user to be tagged.' }));
+      } else {
+        return res.status(404).json({ msg: 'Could not find the post for which tag is to be added.' });
+      }
+    })
+    .catch(err => res.status(404).json({ msg: 'Error while finding post.' }));
+  }
+);
+
+// @route   POST api/posts/untag/:postId
+// @desc    Untag user from post
+// @access  Private
+router.post(
+  '/untag/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+
+    Post.findById(req.params.id)
+    .then(post => {
+      if (post) {
+        User.findOne({username: req.body.username})
+        .then(user => {
+          if (user) {
+            if (post.tags.filter(taggedUserId => taggedUserId.equals(user.id))
+            .length === 0) {
+              return res
+              .status(400)
+              .json({ msg: 'User is not tagged in the post' });
+            } else {
+              for(var i = 0; i < post.tags.length; i++) { 
+                if (post.tags[i].equals(user.id)) {
+                  post.tags.splice(i, 1);
+                }
+              }
+              post.save().then(post => res.json(post));
+            }
+          } else{
+            return res.status(400).json({ msg: 'User to be untagged not found' });
+          }
+        })
+        .catch(err => res.status(404).json({ msg: 'Error while finding user to be untagged.' }));
+      } else {
+        return res.status(404).json({ msg: 'Could not find the post from which user tag is to be removed.' });
+      }
+    })
+    .catch(err => res.status(404).json({ msg: 'Error while finding post.' }));
   }
 );
 

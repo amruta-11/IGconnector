@@ -32,7 +32,6 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userTable'
     }],
-
     tags: [{
         type: Schema.Types.ObjectId,
         ref: 'userTable'

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Schema - basically defition of your data or like a structure
+//Schema - basically definition of your data or like a structure
 //Mongoose has a class named schema which creates schema for storing data into mongoDB
 const Schema = mongoose.Schema;
 
