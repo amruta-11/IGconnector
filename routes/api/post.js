@@ -8,9 +8,10 @@ const validatePostInput = require('../../validation/post')
 const Comment = require('../../models/Comment')
 
 
-// @route  GET api/posts
-// @desc    Get current users posts
-// @access  Private
+
+//@route  GET 'api/posts'
+//@desc   Get current users posts
+//@access Private
 router.get('/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
@@ -21,9 +22,10 @@ router.get('/',
   });
 
 
-// @route   GET api/posts/username/:username
-// @desc    Get other users posts
-// @access  Private
+ 
+//@route  GET 'api/posts/username/:username'
+//@desc   Get other users posts
+//@access Private
 router.get('/username/:username',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
@@ -48,9 +50,10 @@ router.get('/username/:username',
   });
 
 
-// @route   POST api/post
-// @desc    Create post for current user
-// @access  Private
+
+//@route   POST 'api/post'
+//@desc    Create post for current user
+//@access  Private
 router.post(
     '/',
     passport.authenticate('jwt', { session: false }),
@@ -73,33 +76,10 @@ router.post(
   );
 
 
-// @route   DELETE api/post/:postId
-// @desc    Delete post by postId
-// @access  Private
-router.delete(
-    '/:id',
-    passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-      Post.findById(req.params.id)
-        .then(post => {
-          // Check for post owner
-          if (post.userId.toString() !== req.user.id) {
-            return res
-              .status(401)
-              .json({ notauthorized: 'User not authorized' });
-          }
 
-          // Delete
-          post.remove().then(() => res.json({ success: true }));
-        })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' })); 
-    }
-  );
-
-
-// @route   POST api/posts/like/:postId
-// @desc    Like post
-// @access  Private
+//@route   POST 'api/posts/like/:postId'
+//@desc    Like post
+//@access  Private
 router.post(
   '/like/:id',
   passport.authenticate('jwt', { session: false }),
@@ -114,19 +94,19 @@ router.post(
               .status(400)
               .json({ alreadyliked: 'User already liked this post' });
           }
-
           // Add user id to likes array
           post.likes.unshift(req.user.id);
-
           post.save().then(post => res.json(post));
         })
         .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
 
-// @route   POST api/posts/unlike/:postId
-// @desc    Unlike post
-// @access  Private
+
+
+//@route   POST 'api/posts/unlike/:postId'
+//@desc    Unlike post
+//@access  Private
 router.post(
   '/unlike/:id',
   passport.authenticate('jwt', { session: false }),
@@ -155,9 +135,10 @@ router.post(
 );
 
 
-// @route   POST api/posts/tag/:postId
-// @desc    Tag user in post
-// @access  Private
+
+//@route   POST api/posts/tag/:postId
+//@desc    Tag user in post
+//@access  Private
 router.post(
   '/tag/:id',
   passport.authenticate('jwt', { session: false }),
@@ -191,9 +172,11 @@ router.post(
   }
 );
 
-// @route   POST api/posts/untag/:postId
-// @desc    Untag user from post
-// @access  Private
+
+
+//@route   POST 'api/posts/untag/:postId'
+//@desc    Untag user from post
+//@access  Private
 router.post(
   '/untag/:id',
   passport.authenticate('jwt', { session: false }),
@@ -231,17 +214,18 @@ router.post(
   }
 );
 
-// @route   POST api/post/comment/:postId
-// @desc    Add comment to post
-// @access  Private
+
+
+//@route   POST 'api/post/comment/:postId'
+//@desc    Add comment to post
+//@access  Private
 router.post(
   '/comment/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
 
     Post.findById(req.params.id)
-      .then(post => {
-        
+      .then(post => {        
         const newComment = new Comment ({
           content: req.body.content,
           userId: req.user._id,
@@ -253,10 +237,36 @@ router.post(
   }
 );
 
-// @route   DELETE api/post/comment/:commentId
-// @desc    Remove comment from post using CommentID
-// @access  Private
 
+
+//@route   DELETE 'api/post/:postId'
+//@desc    Delete post by postId
+//@access  Private
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+      .then(post => {
+        // Check for post owner
+        if (post.userId.toString() !== req.user.id) {
+          return res
+            .status(401)
+            .json({ notauthorized: 'User not authorized' });
+        }
+        // Delete
+        post.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err => res.status(404).json({ postnotfound: 'No post found' })); 
+  }
+);
+
+
+
+
+//@route   DELETE 'api/post/comment/:commentId'
+//@desc    Remove comment from post using CommentID
+//@access  Private
 router.delete(
   '/comment/:id',
   passport.authenticate('jwt', { session: false }),

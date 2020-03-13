@@ -18,17 +18,15 @@ const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
 
-//@route1   POST   api/users/register
+//@route    POST    'api/users/register'
 //@desc     This route registers the new user
 //@access   public
 router.post('/register', (req, res) => {
-
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
         return res.status(400).json(errors);
     }
-
-    //checking mongoDB if that email address already exists, if yes then return error message
+//checking mongoDB if that email address already exists, if yes then return error message
     User.findOne({ $or: [ {email: req.body.email}, {username: req.body.username} ]})
         .then(user => {
             if (user){
@@ -40,8 +38,7 @@ router.post('/register', (req, res) => {
                     s: '200',
                     r: 'pg',
                     d: 'mm'
-                });
-                
+                });                
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
@@ -49,7 +46,6 @@ router.post('/register', (req, res) => {
                     avatar,
                     password: req.body.password
                 });
-
                 bcrypt.genSalt(10,(err, salt) => {
                     if (err) throw err;
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -57,14 +53,12 @@ router.post('/register', (req, res) => {
                         newUser.password = hash;
                         newUser.save()
                         .then(user => {
-
-                            //Create an empty profile immediately after registering new user
+                //Create an empty profile immediately after registering new user
                             const newProfile = new Profile({
                                 followers: [],
                                 following: [],
                                 userId: user._id,
-                                isPrivate: false,
-                                
+                                isPrivate: false,    
                             });
                             newProfile.save()
                             .then(profile => res.json(user))
@@ -80,17 +74,15 @@ router.post('/register', (req, res) => {
 });     
 
 
-//@route2   POST   api/users/login
+//@route    POST   'api/users/login'
 //@desc     This route allows the users to login / Returning JWT token
 //@access   public
 
 router.post('/login', (req, res) => {
-
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
         return res.status(400).json(errors);
     }
-
     const email = req.body.email;
     const password = req.body.password;
 
@@ -99,13 +91,11 @@ router.post('/login', (req, res) => {
         if(!user){
             return res.status(404).json({email: 'User not found'})
         }
-
         bcrypt.compare(password, user.password)
             .then(isMatch => {
                 if (isMatch){
                     //Payload
                     const payload = {id: user.id, name: user.name, avatar: user.avatar};
-
                     //sign token
                     jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, 
                     (err, token) => {

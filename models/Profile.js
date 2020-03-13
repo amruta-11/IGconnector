@@ -19,7 +19,6 @@ const ProfileSchema = new Schema({
     profilepic: {
         type: String
     },
-
     followers: [{
         type: Schema.Types.ObjectId,
         ref: 'userTable'
@@ -30,7 +29,7 @@ const ProfileSchema = new Schema({
     }],
     isPrivate: {
         type: Boolean,
-        required: true
+        required: false
     },
     website: {
         type: String

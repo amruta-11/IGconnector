@@ -1,5 +1,6 @@
 const validator = require('validator');
 const passValid = require('password-validator');
+const isEmpty = require('./isEmpty');
 
 
 function validateLoginInput(data){
@@ -7,7 +8,11 @@ function validateLoginInput(data){
     let isValid = true;
 
 //Email
-    if (validator.isEmail(data.email) == false){
+    if (isEmpty(data.email)){
+        errors.name = 'Email field is required';
+        isValid = false;
+    }
+    else if (validator.isEmail(data.email) == false){
         errors.email = 'Invalid Email Id';
         isValid = false;
     }
@@ -23,7 +28,7 @@ schema
     .has().not().spaces()                           // Should not have spaces
 
 if (schema.validate(data.password) == false) {
-    errors.password = 'Password must be between 8 and 20 characters and must contain uppercase and lowercase letter, digits and should not have spaces';
+    errors.password = 'Password is incorrect';
     isValid = false;
 }
 

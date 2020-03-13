@@ -4,10 +4,8 @@ const isEmpty = require('./isEmpty');
 
 function validateRegisterInput(data){
     let errors = {};
-
     // Initially assume that data is valid. Later set this variable to false as we go on with validating different fields.
     let isValid = true;
-
 //Name
     if (isEmpty(data.name)){
         errors.name = 'Name field is required';
