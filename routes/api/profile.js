@@ -86,6 +86,7 @@ router.get('/followers/:id',
           User.find()
           .where('_id')
           .in(followers)
+          .select('name username avatar')
           .exec((err, records) => {
             return res.json(records);
           });
@@ -98,7 +99,8 @@ router.get('/followers/:id',
 
 
 //@route  GET 'api/profile/following/userId'
-//@desc   GET the list of people followed by the current user
+//@desc   GET the list of people followed by user whose Id is sent in request params
+//        To get that list we find all the profiles whose followers[] conatins the userId sent in params(req.params.id) & then populate the name, username & avatar from userTable
 //@access Private
 router.get('/following/:id',
   passport.authenticate('jwt', { session: false }),
@@ -110,10 +112,9 @@ router.get('/following/:id',
           res.status(500).json({error: 'Profile not found - This should never happen'});
         }
         else {
-          const following = profile.following;
-          User.find()
-          .where('_id')
-          .in(following)
+          Profile.find({followers: req.params.id})
+          .select('userId -_id')
+          .populate('userId', ['name', 'username', 'avatar'])
           .exec((err, records) => {
             return res.json(records);
           });
@@ -186,21 +187,21 @@ router.post(
 
 
 
-//@route  POST   'api/profile/unfollow/:profileId'
+//@route  POST   'api/profile/unfollow/:userId'
 //@desc   Allows to unfollow other user
 //@access Private
 router.post(
   '/unfollow/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {   
-      Profile.findById(req.params.id)
+      Profile.findOne({userId: req.params.id})
         .then(profile => {
           var followedUsersMatching = profile.followers.filter(followUserId => followUserId.equals(req.user.id));
 
-          if (likedUsersMatching.length === 0) {
+          if (followedUsersMatching.length === 0) {
             return res
               .status(400)
-              .json({ alreadyliked: 'User has not followed this profile' });
+              .json({ alreadyliked: 'Logged in user has not followed this profile' });
           } else {
             // Remove user id from followers array
             for(var i = 0; i < profile.followers.length; i++) { 
