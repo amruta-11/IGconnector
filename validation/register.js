@@ -16,8 +16,8 @@ function validateRegisterInput(data){
             errors.name = 'Name must be between 4 and 30 characters';
             isValid = false;
         }
-        if (validator.isAlpha(data.name) == false){
-            errors.name = 'Name must not contain special characters or numbers';
+        if (validator.isNumeric(data.name) == true){
+            errors.name = 'Name must not contain numbers';
             isValid = false;
         }
     }
@@ -42,6 +42,12 @@ function validateRegisterInput(data){
     }
 
 //Password
+
+    if (isEmpty(data.password)){
+        errors.password = 'Password field is required';
+        isValid = false;
+    } 
+
     var schema = new passValid();
     schema
         .is().min(8)                                    // Minimum length 8
@@ -51,7 +57,7 @@ function validateRegisterInput(data){
         .has().digits()                                 // Must have digits
         .has().not().spaces()                           // Should not have spaces
 
-    if (schema.validate(data.password) == false) {
+    if (!isEmpty(data.password) && schema.validate(data.password) == false) {
         errors.password = 'Password must be between 8 and 20 characters and must contain uppercase and lowercase letter, digits and should not have spaces';
         isValid = false;
     }

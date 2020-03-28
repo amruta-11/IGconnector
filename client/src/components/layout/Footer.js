@@ -2,25 +2,25 @@ import React from 'react';
 
 export default function Footer() {
     return (
-        <footer class="footer">
-        <div class="footer__column">
-            <nav class="footer__nav">
-                <ul class="footer__list">
-                    <li class="footer__list-item"><a href="#" class="footer__link">About Us</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Support</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Blog</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Press</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Api</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Jobs</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Privacy</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Terms</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Directory</a></li>
-                    <li class="footer__list-item"><a href="#" class="footer__link">Language</a></li>
+        <footer className="footer">
+        <div className="footer__column">
+            <nav className="footer__nav">
+                <ul className="footer__list">
+                    <li className="footer__list-item"><a href="#" className="footer__link">About Us</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Support</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Blog</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Press</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Api</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Jobs</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Privacy</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Terms</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Directory</a></li>
+                    <li className="footer__list-item"><a href="#" className="footer__link">Language</a></li>
                 </ul>
             </nav>
         </div>
-        <div class="footer__column">
-            <span class="footer__copyright">© {new Date().getFullYear()} Chitraf</span>
+        <div className="footer__column">
+            <span className="footer__copyright">© {new Date().getFullYear()} Chitraf</span>
         </div>
     </footer>
     )

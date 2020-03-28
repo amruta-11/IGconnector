@@ -9,7 +9,7 @@ function validateLoginInput(data){
 
 //Email
     if (isEmpty(data.email)){
-        errors.name = 'Email field is required';
+        errors.email = 'Email field is required';
         isValid = false;
     }
     else if (validator.isEmail(data.email) == false){
@@ -17,6 +17,10 @@ function validateLoginInput(data){
         isValid = false;
     }
 
+    if (isEmpty(data.password)){
+        errors.password = 'Password field is required';
+        isValid = false;
+    }
 //Password
 var schema = new passValid();
 schema
@@ -27,7 +31,7 @@ schema
     .has().digits()                                 // Must have digits
     .has().not().spaces()                           // Should not have spaces
 
-if (schema.validate(data.password) == false) {
+if (!isEmpty(data.password) && schema.validate(data.password) == false) {
     errors.password = 'Password is incorrect';
     isValid = false;
 }
