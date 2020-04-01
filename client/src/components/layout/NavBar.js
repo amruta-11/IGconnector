@@ -5,7 +5,7 @@ class NavBar extends Component {
     render() {
         //We don't want Navbar for Register & login Page
         const location = this.props.location;
-        if(location.pathname === '/register' || location.pathname === '/login') {
+        if(location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/') {
             return null;
         }
 

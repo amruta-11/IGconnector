@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom'; 
 import classnames from 'classnames';
+import {connect} from 'react-redux'; //For connecting UI component to the store & actions 
+import {registerUser} from '../../actions/authActions';
+import PropTypes from 'prop-types'; //For loading component with required objects & function
+import {withRouter} from 'react-router-dom'; //For routing between one component to other
+
 
 
 class Register extends Component {
@@ -37,19 +41,25 @@ class Register extends Component {
             password: this.state.password
         };
 
-        axios
-            .post('api/users/register', newUser)
-            .then(res => console.log(res.data))
-            .catch(err => this.setState({errors: err.response.data}))
+        //Here we will be triggering the 'registerUser' Action & passing the newUser to it & history property
+        this.props.registerUser(newUser, this.props.history); 
+    }
+
+    //React lifecycle Method
+    componentWillReceiveProps(nextProps){
+        if(nextProps.errors){
+            this.setState({errors:nextProps.errors})
+        }
     }
 
     render() {
-
         var errors = this.state.errors;
+        const {user} = this.props.auth;
 
         return (
             <main id="signup">
             <div className="signup__column">
+
                 <div className="signup__box">
                     <img src={require('../../img/chitraflogo.png')} className="insta__logo" />
                     <img src={require('../../img/signuplogo.PNG')} className="signup__logo"/>
@@ -134,5 +144,16 @@ class Register extends Component {
     }
 }
 
+//Here we are making sure that 'registerUser' & 'auth' is available for Register component to load
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
 
-export default Register;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, {registerUser})(withRouter(Register));

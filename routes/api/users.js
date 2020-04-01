@@ -27,11 +27,11 @@ router.post('/register', (req, res) => {
         return res.status(400).json(errors);
     }
 //checking mongoDB if that email address already exists, if yes then return error message
-    User.findOne({ $or: [ {email: req.body.email}, {username: req.body.username} ]})
+    User.findOne( {email: req.body.email})
         .then(user => {
             if (user){
                 return res.status(400).json({
-                    msg: 'Email or Username already exists'
+                    email: 'Email already exists'
                 })
             } else {
                 const avatar = gravatar.url(req.body.email, {
