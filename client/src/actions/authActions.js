@@ -1,5 +1,7 @@
 import {SET_CURRENT_USER, GET_ERRORS} from './types';
 import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
 
 
 //Register Action
@@ -15,10 +17,38 @@ export const registerUser = (userData, history) => dispatch => {
             ))
 }
 
+//Login Action
+//This action will get the user token & store it in local storage
+export const loginUser = userData => dispatch => {
+    axios
+        .post('api/users/login', userData)
+        .then(res => {
+        // 1. Saving the token in const 'token'
+        const {token} = res.data;
 
-// {
-//     return {
-//         type: SET_CURRENT_USER,
-//         payload: userData
-//     }
-// }
+        // 2. Set the token to LocalStorage- Key value pair
+        localStorage.setItem('jwtToken', token);
+
+        // 3. Set the token to auth header
+        setAuthToken(token);
+
+        //Decode the token to get user data
+        //Install jwt-decode on client side
+        var decoded = jwt_decode(token);
+
+        //Set current user & save user to redux
+        dispatch ({
+            type: SET_CURRENT_USER,
+            payload: decoded
+            })
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            }
+            ))
+}
+
+
+

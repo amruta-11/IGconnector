@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import classnames from 'classnames';
+import {connect} from 'react-redux'; //For connecting UI component to the store & actions 
+import {loginUser} from '../../actions/authActions';
+import PropTypes from 'prop-types'; //For loading component with required objects & function
 
 
 class Login extends Component {
@@ -22,6 +24,17 @@ class Login extends Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
+     //React lifecycle Method
+     componentWillReceiveProps(nextProps)
+     {
+         if (nextProps.auth.isAuthenticated){
+             this.props.history.push('/feed')
+         }
+         if(nextProps.errors){
+             this.setState({errors:nextProps.errors})
+         }
+     }
+
     //onSubmit Event
     onSubmit(e){
         e.preventDefault();
@@ -30,12 +43,8 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
           };
-        
 
-        axios
-        .post('api/users/login', user)
-        .then(res => console.log(res.data))
-        .catch(err => this.setState({errors: err.response.data}))
+        this.props.loginUser(user);     
     }
 
 
@@ -111,4 +120,16 @@ class Login extends Component {
 }
 
 
-export default Login;
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, {loginUser})(Login);

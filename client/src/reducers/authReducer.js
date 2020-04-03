@@ -3,6 +3,7 @@
 //'authReducer' will write the authentication info into the store
 
 import {SET_CURRENT_USER} from '../actions/types';
+import isEmpty from '../validation/isEmpty';
 
 const initialState = {
     isAuthenticated: false,
@@ -16,6 +17,8 @@ export default function(state = initialState, action){
         case SET_CURRENT_USER:
             return{
                 ...state,
+                //Check if payload is empty or not
+                isAuthenticated: !isEmpty(action.payload),
                 user: action.payload
             }
         default:

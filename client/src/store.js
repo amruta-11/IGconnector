@@ -12,7 +12,10 @@ rootReducer,
 //Compose is to see the store because browsers don't allow
 compose(
 applyMiddleware(...middleware),
-window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+window.__REDUX_DEVTOOLS_EXTENSION__
+? window.__REDUX_DEVTOOLS_EXTENSION__()
+: f => f
+// window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
 
 
