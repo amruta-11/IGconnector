@@ -126,11 +126,11 @@ router.get('/following/:id',
 
 
 
-//@route  POST   'api/profile/create'
-//@desc   Create & edit user profile
+//@route  POST   'api/profile/edit'
+//@desc   Edit user profile
 //@access Private
 router.post(
-  '/',
+  '/edit',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
       const { errors, isValid } = validateProfileInput(req.body);
@@ -144,11 +144,11 @@ router.post(
   if (req.body.bio) profileFields.bio = req.body.bio;
   if (req.body.website) profileFields.website = req.body.website;
 
-  Profile.findOne({ user: req.user.id})
+  Profile.findOne({ userId: req.user.id})
   .then(profile => {
       if (profile) {
           Profile.findOneAndUpdate(
-              {user: req.user.id},
+              {userId: req.user.id},
               {$set: profileFields},
               {new: true})
               .then(profile => res.json(profile));

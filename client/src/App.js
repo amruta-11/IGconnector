@@ -10,27 +10,25 @@ import {SET_CURRENT_USER} from './actions/types';
 import {logoutUser} from './actions/authActions'
 
 
-
 //Components
 import NavBar from "./components/layout/NavBar"
 import Footer from "./components/layout/Footer"
 import Register from "./components/auth/Register"
 import Login from "./components/auth/Login"
+import Profile from "./components/profile/Profile"
+import EditProfile from "./components/edit-profile/EditProfile"
 
 
 //Check if there is a token
 if (localStorage.jwtToken){
   //Set the auth header to token
   setAuthToken(localStorage.jwtToken);
-
   //decode
   const decoded = jwt_decode(localStorage.jwtToken);
-
   store.dispatch({
     type: SET_CURRENT_USER,
     payload: decoded
   })
-
   //Check if token is expired
   const currentTime = Date.now()/1000;
   if (decoded.exp < currentTime){
@@ -52,6 +50,8 @@ class App extends Component {
         <Route path='/' component={NavBar} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/(|login)" component={Login} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/profile/edit" component={EditProfile} />
         <Footer />
       </div>
       </Router>

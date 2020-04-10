@@ -97,7 +97,7 @@ router.post('/login', (req, res) => {
             .then(isMatch => {
                 if (isMatch){
                     //Payload
-                    const payload = {id: user.id, name: user.name, avatar: user.avatar};
+                    const payload = {id: user.id, name: user.name, avatar: user.avatar, username: user.username};
                     //sign token
                     jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, 
                     (err, token) => {
