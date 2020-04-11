@@ -1,4 +1,5 @@
 const validator = require('validator');
+const isEmpty = require('./isEmpty');
 
 function validatePostInput(data){
     let errors = {};

@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 class PostItem extends Component {
     render() {
         const post = this.props.post;
-        
+        if (post === null || post === undefined) {
+            return '';
+        }
         return (
             <div class="profile__photo">
                 <img src={post.imageURL}

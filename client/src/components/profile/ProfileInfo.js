@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class ProfileInfo extends Component {
     render() {
         const profile = this.props.profile;
-        const postArray = this.props.postArray;
+        const numberOfPosts = this.props.numberOfPosts;
         return (
 // Profile Component
     <main id="profile">
@@ -28,7 +28,7 @@ class ProfileInfo extends Component {
                 <ul class="profile__stats">
                     <li class="profile__stat">
                         <span class="stat__number">
-                            {postArray.length}
+                            {numberOfPosts}
                             </span> 
                             Posts
                     </li>

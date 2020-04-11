@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 //Actions
 import {getProfileByUsername} from '../../actions/profileActions';
-import {getPostByUsername} from '../../actions/profileActions';
+import {getPostByUsername} from '../../actions/postActions';
 //Sub-Components
 import ProfileInfo from "./ProfileInfo";
 import ProfilePost from './ProfilePost';
@@ -17,19 +17,19 @@ class Profile extends Component {
 
       render() {
         const profile = this.props.mappedProfile;
-        const post = this.props.mappedPost;
+        const posts = this.props.mappedPost;
 
         let profileContent;
     
-        if (profile === null || post === null) {
+        if (profile === null || posts === null) {
           profileContent = <Spinner />;
         } else {
           profileContent = (
             <div>
               {/* Here we are passing the mapped profile to the Sub Components with variable names 'profile' & 'postArray' .
               Meaning, to access the mapped profile & mapped post in ProfileInfo & ProfilePost Component we will have to use the variable 'profile' & 'postArray' e.g this.props.postArray */}
-              <ProfileInfo profile={profile} postArray={post} />
-              <ProfilePost postArray={post} />
+              <ProfileInfo profile={profile} numberOfPosts={posts.length} />
+              <ProfilePost postArray={posts} />
             </div>
           );
         }
@@ -62,7 +62,7 @@ Profile.propTypes = {
 
 const mapStateToProps = state => ({
     mappedProfile: state.profile.profile,
-    mappedPost: state.profile.post,
+    mappedPost: state.post.posts,
     username: state.auth.user.username,
   });
 

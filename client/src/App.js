@@ -11,12 +11,14 @@ import {logoutUser} from './actions/authActions'
 
 
 //Components
-import NavBar from "./components/layout/NavBar"
-import Footer from "./components/layout/Footer"
-import Register from "./components/auth/Register"
-import Login from "./components/auth/Login"
-import Profile from "./components/profile/Profile"
-import EditProfile from "./components/edit-profile/EditProfile"
+import NavBar from "./components/layout/NavBar";
+import Footer from "./components/layout/Footer";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import Profile from "./components/profile/Profile";
+import EditProfile from "./components/edit-profile/EditProfile";
+import CreatePost from "./components/create-post/CreatePost";
+
 
 
 //Check if there is a token
@@ -52,6 +54,7 @@ class App extends Component {
         <Route exact path="/(|login)" component={Login} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/profile/edit" component={EditProfile} />
+        <Route exact path="/post/create" component={CreatePost} />
         <Footer />
       </div>
       </Router>

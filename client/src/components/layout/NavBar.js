@@ -27,28 +27,38 @@ class NavBar extends Component {
                     <img src={require('../../img/chitraflogo.png')}/>
                     </Link>
                 </div>
+                {/* Search */}
                 <div className="navigation__column">
                     <i className="fa fa-search"></i>
                     <input type="text" placeholder="Search"/>
                 </div>
+
+                {/* Add Image Icon */}
                 <div className="navigation__column">
                     <ul className="navigations__links">
                         <li className="navigation__list-item">
-                            <Link to="/notify" className="navigation__link">
-                                <i className="fa fa-heart-o fa-lg"></i>
+                            <Link to="/post/create" className="navigation__link">
+                            <i class="fas fa-plus-circle" 
+                            title="Add Image"></i>
                             </Link>
                         </li>
+
+                 {/* Go to Profile Icon */}
                         <li className="navigation__list-item">
                             <Link to="/profile" className="navigation__link">
-                                <i className="fa fa-user-o fa-lg"></i>
+                            <i class="fas fa-user-alt" 
+                            title="My Profile"></i>
                             </Link>
                         </li>
+
+                {/* Sign Out Icon */}       
                         <li className="navigation__list-item">
                         <a
                             onClick={this.onLogoutClick.bind(this)}
                             className="navigation__link">
                         <Link to="/login" className="navigation__link">
-                        <i className="fas fa-sign-out-alt"></i>
+                        <i className="fas fa-sign-out-alt" 
+                        title="Sign Out"></i>
                         </Link>
                         </a>
                         </li>
