@@ -25,12 +25,12 @@ class Profile extends Component {
           profileContent = <Spinner />;
         } else {
           profileContent = (
-            <div>
+            <main id= "profile">
               {/* Here we are passing the mapped profile to the Sub Components with variable names 'profile' & 'postArray' .
               Meaning, to access the mapped profile & mapped post in ProfileInfo & ProfilePost Component we will have to use the variable 'profile' & 'postArray' e.g this.props.postArray */}
               <ProfileInfo profile={profile} numberOfPosts={posts.length} />
               <ProfilePost postArray={posts} />
-            </div>
+            </main>
           );
         }
         return (

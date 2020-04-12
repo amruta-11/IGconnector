@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-
 class ProfileInfo extends Component {
     render() {
         const profile = this.props.profile;
         const numberOfPosts = this.props.numberOfPosts;
         return (
 // Profile Component
-    <main id="profile">
         <header class="profile__header">
             <div class="profile__column">
                 <img 
@@ -59,7 +57,6 @@ class ProfileInfo extends Component {
                 </p>
             </div>
         </header>
-    </main>
         )
     }
 }
