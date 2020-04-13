@@ -35,8 +35,8 @@ router.get('/username/:username',
                 Post.find({userId: user._id})
                 .sort({ date: -1 })
                 .then(post => {
-                    if (post) {    
-                        return res.json(post);
+                    if (post) {
+                      return res.json(post);
                     } else {
                         return res.json()
                     }

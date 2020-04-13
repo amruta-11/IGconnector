@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class ProfileInfo extends Component {
+class ProfileInfoOther extends Component {
     render() {
         const profile = this.props.profile;
         const numberOfPosts = this.props.numberOfPosts;
@@ -19,8 +19,8 @@ class ProfileInfo extends Component {
                     <h3 class="profile__username">
                         {profile.userId.username}
                     </h3>
-                    <Link to="/profile/edit/">
-                        Edit profile
+                    <Link to="/profile/edit">
+                        Follow
                     </Link>
                 </div>
 {/* <!--Followers & Following--> */}
@@ -62,4 +62,4 @@ class ProfileInfo extends Component {
     }
 }
 
-export default ProfileInfo;
+export default ProfileInfoOther;

@@ -11,6 +11,7 @@ import {getPostByUsername} from '../../actions/postActions';
 //Sub-Components
 import ProfileInfo from "./ProfileInfo";
 import ProfilePost from './ProfilePost';
+import ProfileInfoOther from './ProfileInfoOther';
 
 
 class Profile extends Component {
@@ -24,14 +25,25 @@ class Profile extends Component {
         if (profile === null || posts === null) {
           profileContent = <Spinner />;
         } else {
-          profileContent = (
-            <main id= "profile">
-              {/* Here we are passing the mapped profile to the Sub Components with variable names 'profile' & 'postArray' .
-              Meaning, to access the mapped profile & mapped post in ProfileInfo & ProfilePost Component we will have to use the variable 'profile' & 'postArray' e.g this.props.postArray */}
-              <ProfileInfo profile={profile} numberOfPosts={posts.length} />
-              <ProfilePost postArray={posts} />
-            </main>
-          );
+            if (this.props.match.params.username) {
+              //To get other User's Profile
+              profileContent = (
+                <main id= "profile">
+                  {/* Here we are passing the mapped profile to the Sub Components with variable names 'profile' & 'postArray' .
+                  Meaning, to access the mapped profile & mapped post in ProfileInfo & ProfilePost Component we will have to use the variable 'profile' & 'postArray' e.g this.props.postArray */}
+                  <ProfileInfoOther profile={profile} numberOfPosts={posts.length} />
+                  <ProfilePost postArray={posts} />
+                </main>
+              );
+            } else if (this.props.username) {
+              //To get Current User's Profile
+              profileContent = (
+                <main id= "profile">
+                  <ProfileInfo profile={profile} numberOfPosts={posts.length} />
+                  <ProfilePost postArray={posts} />
+                </main>
+              ); 
+            }
         }
         return (
           <div className="profile">
@@ -45,13 +57,20 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-      if (this.props.username) {
-        this.props.getProfileByUsername(this.props.username);
-        this.props.getPostByUsername(this.props.username);
+      let usernameLocal = null;
+      if (this.props.match.params.username) {
+        usernameLocal = this.props.match.params.username;
+      } else if (this.props.username) {
+        usernameLocal = this.props.username;
+      }
+
+      if (usernameLocal !== null) {
+        this.props.getProfileByUsername(usernameLocal);
+        this.props.getPostByUsername(usernameLocal);
       }       
     }
-
 }
+
 
 Profile.propTypes = {
     getProfileByUsername: PropTypes.func.isRequired,
@@ -59,6 +78,7 @@ Profile.propTypes = {
     profile: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired
 };
+
 
 const mapStateToProps = state => ({
     mappedProfile: state.profile.profile,
@@ -68,7 +88,7 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, { getProfileByUsername, getPostByUsername })(Profile);
-  
+
 
 
 //1. Initial Render - User will have auth props (name, username, avatar, etc)
