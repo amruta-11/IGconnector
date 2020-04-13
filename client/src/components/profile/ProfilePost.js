@@ -13,8 +13,7 @@ class ProfilePost extends Component {
 
         return <section class="profile__photos">
                     {postItems}
-                </section>
-                ;
+                </section>;
     }
 }
 

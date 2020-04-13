@@ -31,14 +31,6 @@
 
 }
 
-@keyframes rotateLynn {
-  from {
-    transform: rotateY(0turn);
-  }
-  to {
-    transform: rotateY(1turn);
-  }
-}
 
 .profile__column .profile__title,
 .profile__column .profile__stats {
@@ -116,16 +108,15 @@
 #profile .profile__photos {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   max-width: 936px;
   width: 100%;
 }
 
 .profile__photo {
-  width: 32%;
-  margin-bottom: 20px;
+  width: 31%;
   position: relative;
   max-height: 312px;
+  margin: 1%;
 }
 
 .profile__photo img {
@@ -133,7 +124,7 @@
   height: 100%;
 } 
 
-.profile__photo .profile__photo-overlay {
+.profile__photo-overlay {
   position: absolute;
   top: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -159,7 +150,6 @@
 }
 .profile__photo-overlay .overlay__item:last-child {
   margin-left: 10px;
-  /**/
 }
 
 .profile__photo-overlay .overlay__item i {

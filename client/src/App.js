@@ -18,7 +18,7 @@ import Login from "./components/auth/Login";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import CreatePost from "./components/create-post/CreatePost";
-
+import Feed from "./components/feed/Feed";
 
 
 //Check if there is a token
@@ -55,6 +55,7 @@ class App extends Component {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/profile/edit" component={EditProfile} />
         <Route exact path="/post/create" component={CreatePost} />
+        <Route exact path="/feed" component={Feed} />
         <Footer />
       </div>
       </Router>

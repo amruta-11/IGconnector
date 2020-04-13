@@ -71,7 +71,7 @@ class EditProfile extends Component {
                     <div className="form__row">
                         <label for="website" className="form__label">Website:</label>
                         <input 
-                        id="website" type="url" 
+                        id="website" type="text" 
                         className={classnames("form-control form-control-lg", {
                             'is-invalid': errors.website
                         })}

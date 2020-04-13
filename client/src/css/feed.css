@@ -25,14 +25,36 @@
   margin-right: 10px;
 }
 
+/* Newly added CSS for commentors Username & Avatar */
+.photo__comment {
+  margin-bottom: 10px;
+  display: flex;
+}
+.photo__comment .photo___avatar {
+  width: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.photo__comment .photo___author {
+  font-weight: 600;
+  margin-top: 7px;
+}
+
+.photo__comment .photo___content{
+  font-weight:400;
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
 .photo .photo__user-info .photo__author {
   display: block;
   font-weight: 600;
   margin-bottom: 5px;
+  color: black;
 }
 
 .photo > img {
-  max-width: 100%;
+  width: 100%;
 }
 
 .photo .photo__info {
@@ -92,9 +114,7 @@
   display: block;
 }
 
-.photo__comment {
-  margin-bottom: 10px;
-}
+
 
 .photo__comments .photo__comment-author {
   font-weight: 600;
