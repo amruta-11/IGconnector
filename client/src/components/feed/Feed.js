@@ -1,10 +1,10 @@
+//Libraries
 import React, { Component } from 'react';
 import Spinner from "../common/Spinner";
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'; 
-
 //Actions
-import {getPostByUsername} from '../../actions/postActions';
+import {getAllPost} from '../../actions/postActions';
 //Sub-Components
 import FeedPost from '../feed-item/FeedPost';
 
@@ -12,16 +12,15 @@ import FeedPost from '../feed-item/FeedPost';
 class Feed extends Component {
     render() {
         const mappedPost = this.props.mappedPost;
-
         if (mappedPost === null) {
             return <Spinner />;
           } else {
               var feedPost = [];
               for(var i = 0; i < mappedPost.length; i++) {
                   feedPost.push(
-                  <FeedPost oneFeedPost ={mappedPost[i]} 
-                  username= {this.props.username}
-                  avatar= {this.props.avatar}
+                  <FeedPost 
+                  oneFeedPost = {mappedPost[i]}
+                  userid = {this.props.loggedInUserId}
                   />);
               }
               return <main id="feed">
@@ -31,24 +30,19 @@ class Feed extends Component {
     }
 
     componentDidMount() {
-        const username = this.props.username;
-        if (username) {
-          this.props.getPostByUsername(username);
-        }       
-      }
+        this.props.getAllPost();     
+    }
 }
 
-
 Feed.propTypes = {
-    getPostByUsername: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    getAllPost: PropTypes.func.isRequired
+//  getPostByUsername: PropTypes.func.isRequired,
+//  mappedPost: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     mappedPost: state.post.posts,
-    username: state.auth.user.username,
-    avatar: state.auth.user.avatar
+    loggedInUserId: state.auth.user.id
   });
 
-
-export default connect(mapStateToProps, { getPostByUsername })(Feed);
+export default connect(mapStateToProps, { getAllPost })(Feed);

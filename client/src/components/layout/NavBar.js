@@ -6,7 +6,19 @@ import PropTypes from 'prop-types';
 
 
 class NavBar extends Component {
-    
+    constructor(){
+        super();
+        this.state = {
+            searchInput: '',
+            userList: [],
+            errors: {}
+        }
+
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+    }
+
     onLogoutClick(e){
         e.preventDefault();
         this.props.logoutUser();

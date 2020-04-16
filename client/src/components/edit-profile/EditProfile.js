@@ -1,13 +1,16 @@
+//@desc This component allows the logged in user to edit the profile i.e bio & website
+//After getting the profileData we will passing it to the 'editProfile' action
+//In the 'editProfile' action we will be making an axios call to the api
+//The API will run & store that data into mongoDB
+
 //Libraries & Functions
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-
 //Actions
 import {editProfile} from '../../actions/profileActions';
-
 
 class EditProfile extends Component {
     constructor() {
@@ -45,7 +48,6 @@ class EditProfile extends Component {
             this.setState({errors:nextProps.errors})
         }
     }
-
     render() {
         var errors = this.state.errors;
         const {user} = this.props.auth;
@@ -105,7 +107,6 @@ class EditProfile extends Component {
         )
     }
 }
-
 
 EditProfile.propTypes = {
     editProfile: PropTypes.func.isRequired,

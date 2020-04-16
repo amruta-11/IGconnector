@@ -1,8 +1,9 @@
+//@desc This file contains all the actions that will be implemented on the Authentication components like Register, Log in, Log Out
+
 import {SET_CURRENT_USER, GET_ERRORS} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-
 
 //Register Action
 export const registerUser = (userData, history) => dispatch => {

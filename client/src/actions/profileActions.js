@@ -1,8 +1,9 @@
+//@desc This file contains all the actions that will be implemented on the Profile components
+
 import {GET_ERRORS, GET_PROFILE} from './types';
 import axios from 'axios';
 
-
-// Create or Edit Profile Action
+// Edit Profile Action
 export const editProfile = (profileData, history) => dispatch => {
     axios
       .post('/api/profile/edit', profileData)

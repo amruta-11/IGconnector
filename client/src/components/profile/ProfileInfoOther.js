@@ -19,7 +19,7 @@ class ProfileInfoOther extends Component {
                     <h3 class="profile__username">
                         {profile.userId.username}
                     </h3>
-                    <Link to="/profile/edit">
+                    <Link to="/profile/">
                         Follow
                     </Link>
                 </div>

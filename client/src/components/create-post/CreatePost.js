@@ -1,13 +1,15 @@
+//@desc This component will allow user to add the post - imageURL & content
+//The 'createPost' action will make the axios call & fire the API
+//After the user adds the post he will be directed to the Updated Profile Page
+
 //Libraries & Functions
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-
 //Actions
 import {createPost} from '../../actions/postActions';
-
 
 class CreatePost extends Component {
 
@@ -38,15 +40,12 @@ class CreatePost extends Component {
         //Here we will be triggering the 'editProfile' Action & passing the profileData to it & history property
         this.props.createPost(postData, this.props.history); 
     }
-
-
     //React lifecycle Method
      componentWillReceiveProps(nextProps){
         if(nextProps.errors){
             this.setState({errors:nextProps.errors})
         }
     }
-
     render() {
         var errors = this.state.errors;
         const {user} = this.props.auth;
@@ -108,7 +107,6 @@ class CreatePost extends Component {
     }
 }
 
-
 CreatePost.propTypes = {
     createPost: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
@@ -120,5 +118,5 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-//editProfile is the action
+//createPost is the action
 export default connect(mapStateToProps, {createPost})(withRouter(CreatePost));

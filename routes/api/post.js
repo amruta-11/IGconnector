@@ -8,22 +8,22 @@ const validatePostInput = require('../../validation/post')
 const Comment = require('../../models/Comment')
 
 
-
-//@route  GET 'api/posts'
-//@desc   Get current users posts
+//@route  GET 'api/post'
+//@desc   Get all users posts
 //@access Private
 router.get('/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
-        Post.find({userId: req.user._id})
+        Post.find()
+        .populate('userId', ['name', 'username', 'avatar'])
+        .populate('comments', ['content', 'userId'])
         .sort({ date: -1 })
         .then(posts => res.json(posts))
         .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
   });
 
 
- 
-//@route  GET 'api/posts/username/:username'
+//@route  GET 'api/post/username/:username'
 //@desc   Get other users posts
 //@access Private
 router.get('/username/:username',
@@ -76,8 +76,7 @@ router.post(
   );
 
 
-
-//@route   POST 'api/posts/like/:postId'
+//@route   POST 'api/post/like/:postId'
 //@desc    Like post
 //@access  Private
 router.post(
@@ -104,7 +103,7 @@ router.post(
 
 
 
-//@route   POST 'api/posts/unlike/:postId'
+//@route   POST 'api/post/unlike/:postId'
 //@desc    Unlike post
 //@access  Private
 router.post(
@@ -136,7 +135,7 @@ router.post(
 
 
 
-//@route   POST api/posts/tag/:postId
+//@route   POST api/post/tag/:postId
 //@desc    Tag user in post
 //@access  Private
 router.post(
@@ -174,7 +173,7 @@ router.post(
 
 
 
-//@route   POST 'api/posts/untag/:postId'
+//@route   POST 'api/post/untag/:postId'
 //@desc    Untag user from post
 //@access  Private
 router.post(
@@ -216,22 +215,25 @@ router.post(
 
 
 
-//@route   POST 'api/post/comment/:postId'
+//@route   POST 'api/post/comment/:postid'
 //@desc    Add comment to post
 //@access  Private
 router.post(
-  '/comment/:id',
+  '/comment/:postid',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
 
-    Post.findById(req.params.id)
+    Post.findById(req.params.postid)
       .then(post => {        
         const newComment = new Comment ({
           content: req.body.content,
           userId: req.user._id,
-          postId: req.params.id
+          postId: req.params.postid
         });
-        newComment.save().then(comment => res.json(comment));
+        newComment.save().then(comment => {
+          post.comments.push(comment._id);
+          post.save().then(res.json(comment));
+        });
       })
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }

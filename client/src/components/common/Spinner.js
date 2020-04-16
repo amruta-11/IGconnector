@@ -1,3 +1,5 @@
+//@desc Spinner will be called whenever the component will be loading
+
 import React from 'react';
 import spinner from './spinner.gif';
 
