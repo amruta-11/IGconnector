@@ -19,7 +19,6 @@ const validateProfileInput = require('../../validation/profile');
 router.get('/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-
     Profile.findOne({userId: req.user.id})
       // .populate searches by userId and populates the data for that user into profile Object
       .populate('userId', ['name', 'username', 'avatar'])

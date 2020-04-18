@@ -74,6 +74,27 @@ router.post('/register', (req, res) => {
 });     
 
 
+//@route    GET    'api/users/'
+//@desc     This route gets all the user
+//@access   private
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    User.find()
+      .then(users => {
+        if (!users){
+          res.status(500).json({error: 'Users not found - This should never happen'});
+        }
+        else {
+          res.json(users);
+        }
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+
+
 //@route    POST   'api/users/login'
 //@desc     This route allows the users to login / Returning JWT token
 //@access   public

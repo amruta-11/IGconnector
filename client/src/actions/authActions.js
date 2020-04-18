@@ -1,6 +1,6 @@
 //@desc This file contains all the actions that will be implemented on the Authentication components like Register, Log in, Log Out
 
-import {SET_CURRENT_USER, GET_ERRORS} from './types';
+import {SET_CURRENT_USER, GET_ERRORS, GET_USERSLIST} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
@@ -52,7 +52,7 @@ export const loginUser = userData => dispatch => {
 }
 
 //Logout Action
-export const logoutUser = () => dispatch => {
+export const logoutUser = (history) => dispatch => {
     //Remove the token stored in local storage
     localStorage.removeItem('jwtToken');
 
@@ -65,7 +65,25 @@ export const logoutUser = () => dispatch => {
         //Empty Payload
         payload: {}
         });
+    
+    history.push('/login');
 } 
 
 
-
+//To get User list
+export const getUserList = () => dispatch => {
+    axios
+        .get('api/users/')
+        .then(res =>  
+            dispatch({
+            type: GET_USERSLIST,
+            payload: res.data
+        })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            }
+            ))
+}

@@ -15,8 +15,13 @@ router.get('/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
         Post.find()
+        .limit(10)
         .populate('userId', ['name', 'username', 'avatar'])
-        .populate('comments', ['content', 'userId'])
+        .populate({
+          path:'comments',
+          model: 'commentTable',
+          populate: {path: 'userId', model: 'userTable'}
+        })
         .sort({ date: -1 })
         .then(posts => res.json(posts))
         .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));

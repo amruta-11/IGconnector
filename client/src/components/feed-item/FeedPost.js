@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {likePost} from '../../actions/postActions';
 import {unlikePost} from '../../actions/postActions'; 
 import {addComment} from '../../actions/postActions';
+import FeedComment from './FeedComment';
 
 
 class FeedPost extends Component {
@@ -40,6 +41,24 @@ class FeedPost extends Component {
     onUnlikeClick(id){
         this.props.unlikePost(id);
     }
+
+    getCommentsJSX(comments) {
+        var commentsComp = [];
+              for(var i = 0; i < comments.length; i++) {
+                  commentsComp.push(
+                  <FeedComment 
+                  oneComment = {comments[i]}
+                  />);
+              }
+              return  <ul>
+                  {commentsComp}
+                    </ul>
+    }
+
+    componentWillReceiveProps(){
+        this.state.comment = '';
+    }
+
     render() {
         const oneFeedPost = this.props.oneFeedPost;
         const loggedInUserId = this.props.userid
@@ -82,14 +101,8 @@ class FeedPost extends Component {
                 <span className= "photo__author">{oneFeedPost.userId.username}</span>
                 <span className="photo__content">{oneFeedPost.content}</span>
                 </div>
-                <ul>
-                    <li className="photo__comment">
-                        {/* Commentors Username & Avatar */}
-                        {/* <img src={oneFeedPost.userId.avatar} className="photo___avatar" /> */}
-                        <span className="photo___author">{}</span>
-                        <span className="photo___content">Comment Content Here</span>
-                    </li>
-                </ul>
+                {/* Comments */}
+                   {this.getCommentsJSX(oneFeedPost.comments)}
                 <span className="photo__time-ago">{oneFeedPost.date}</span>
                 <div className="photo__add-comment-container">
                     <form onSubmit = {this.onSubmit}>

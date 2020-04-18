@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 
-export default class FeedComment extends Component {
+ class FeedComment extends Component {
     render() {
+        const oneComment = this.props.oneComment;
         return (
-            
+            <li className="photo__comment">
+            <span className="photo___author">{oneComment.userId.username}</span>
+        <span className="photo___content">{oneComment.content}</span>
+        </li>
         )
     }
 }
+
+
+export default FeedComment;

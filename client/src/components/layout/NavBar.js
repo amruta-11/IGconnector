@@ -1,27 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import {logoutUser} from '../../actions/authActions';
-import {connect} from 'react-redux'; //For connecting UI component to the store & actions
+import {connect} from 'react-redux'; 
 import PropTypes from 'prop-types';
+
+import {logoutUser} from '../../actions/authActions';
+// import {getUserList} from '../../actions/authActions';
 
 
 class NavBar extends Component {
-    constructor(){
-        super();
-        this.state = {
-            searchInput: '',
-            userList: [],
-            errors: {}
-        }
-
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-    }
-
     onLogoutClick(e){
         e.preventDefault();
-        this.props.logoutUser();
+        this.props.logoutUser(this.props.history);
     }
 
     render() {
@@ -44,13 +33,12 @@ class NavBar extends Component {
                     <i className="fa fa-search"></i>
                     <input type="text" placeholder="Search"/>
                 </div>
-
                 {/* Add Image Icon */}
                 <div className="navigation__column">
                     <ul className="navigations__links">
                         <li className="navigation__list-item">
                             <Link to="/post/create" className="navigation__link">
-                            <i class="fas fa-plus-circle" 
+                            <i className="fas fa-plus-circle" 
                             title="Add Image"></i>
                             </Link>
                         </li>
@@ -58,21 +46,17 @@ class NavBar extends Component {
                  {/* Go to Profile Icon */}
                         <li className="navigation__list-item">
                             <Link to="/profile" className="navigation__link">
-                            <i class="fas fa-user-alt" 
+                            <i className="fas fa-user-alt" 
                             title="My Profile"></i>
                             </Link>
                         </li>
 
                 {/* Sign Out Icon */}       
                         <li className="navigation__list-item">
-                        <a
-                            onClick={this.onLogoutClick.bind(this)}
-                            className="navigation__link">
-                        <Link to="/login" className="navigation__link">
+                        <Link onClick={this.onLogoutClick.bind(this)} className="navigation__link">
                         <i className="fas fa-sign-out-alt" 
                         title="Sign Out"></i>
                         </Link>
-                        </a>
                         </li>
                     </ul>
                 </div>
@@ -81,12 +65,10 @@ class NavBar extends Component {
     }
 }
 
-
 NavBar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
 }
-
 
 const mapStateToProps = (state) => ({
     auth: state.auth,

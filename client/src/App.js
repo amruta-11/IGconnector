@@ -19,6 +19,7 @@ import Profile from "./components/profile/Profile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import CreatePost from "./components/create-post/CreatePost";
 import Feed from "./components/feed/Feed";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 
 //Check if there is a token
@@ -52,12 +53,12 @@ class App extends Component {
         <Route path='/' component={NavBar} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/(|login)" component={Login} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/post/create" component={CreatePost} />
-        <Route exact path="/feed" component={Feed} />
+        <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute exact path="/post/create" component={CreatePost} />
+        <PrivateRoute exact path="/feed" component={Feed} />
         <Switch>
-        <Route exact path="/profile/edit/" component={EditProfile} />
-        <Route exact path="/profile/:username" component={Profile} />
+        <PrivateRoute exact path="/profile/edit/" component={EditProfile} />
+        <PrivateRoute exact path="/profile/:username" component={Profile} />
         </Switch>
         <Footer />
       </div>
