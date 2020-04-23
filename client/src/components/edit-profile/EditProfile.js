@@ -100,6 +100,7 @@ class EditProfile extends Component {
                             <div className="invalid-feedback">{errors.bio}</div>
                         )}
                     </div>
+                    
                     <input type="submit" value="Submit"/>
                 </form>
             </div>

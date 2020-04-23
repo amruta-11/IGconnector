@@ -40,7 +40,6 @@ export const getAllPost = () => dispatch => {
         }))
 }
 
-
 //Create Post - Action
 export const createPost = (postData, history) => dispatch => {
   axios

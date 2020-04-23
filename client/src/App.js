@@ -9,7 +9,6 @@ import jwt_decode from 'jwt-decode';
 import {SET_CURRENT_USER} from './actions/types';
 import {logoutUser} from './actions/authActions'
 
-
 //Components
 import NavBar from "./components/layout/NavBar";
 import Footer from "./components/layout/Footer";
@@ -20,6 +19,8 @@ import EditProfile from "./components/edit-profile/EditProfile";
 import CreatePost from "./components/create-post/CreatePost";
 import Feed from "./components/feed/Feed";
 import PrivateRoute from "./components/common/PrivateRoute";
+import FollowersList from "./components/followers/FollowersList";
+import FollowingList from "./components/following/FollowingList";
 
 
 //Check if there is a token
@@ -42,7 +43,6 @@ if (localStorage.jwtToken){
   }
 }
 
-
 class App extends Component {
   render() {
     return(
@@ -59,6 +59,8 @@ class App extends Component {
         <Switch>
         <PrivateRoute exact path="/profile/edit/" component={EditProfile} />
         <PrivateRoute exact path="/profile/:username" component={Profile} />
+        <PrivateRoute exact path="/profile/followers/:username" component={FollowersList} />
+        <PrivateRoute exact path="/profile/following/:username" component={FollowingList} />
         </Switch>
         <Footer />
       </div>
@@ -67,6 +69,5 @@ class App extends Component {
     )
   }
 }
-
 
 export default App;

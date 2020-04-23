@@ -17,6 +17,7 @@ class Profile extends Component {
       render() {
         const profile = this.props.mappedProfile;
         const posts = this.props.mappedPost;
+        const id = this.props.currentUserId;
 
         let profileContent;
     
@@ -34,7 +35,8 @@ class Profile extends Component {
                   {/* To access the mapped profile & mapped post in ProfileInfo & ProfilePost Component we will have to use the variable 'profile' & 'postArray' e.g this.props.postArray */}
                   <ProfileInfoOther 
                   profile={profile} 
-                  numberOfPosts={posts.length} />
+                  numberOfPosts={posts.length}
+                  id= {id} />
                   <ProfilePost 
                   postArray={posts} />
                 </main>
@@ -90,6 +92,7 @@ const mapStateToProps = state => ({
     mappedProfile: state.profile.profile,
     mappedPost: state.post.posts,
     username: state.auth.user.username,
+    currentUserId: state.auth.user.id
   });
 
 export default connect(mapStateToProps, { getProfileByUsername, getPostByUsername })(Profile);

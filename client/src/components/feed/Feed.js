@@ -45,4 +45,4 @@ const mapStateToProps = state => ({
     loggedInUserId: state.auth.user.id
   });
 
-export default connect(mapStateToProps, { getAllPost })(Feed);
+export default connect(mapStateToProps, { getAllPost})(Feed);

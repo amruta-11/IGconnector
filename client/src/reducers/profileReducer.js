@@ -1,6 +1,6 @@
 //Only reducers can write the data to the store
 //Reducers define what data to be written into the store
-import {GET_PROFILE} from '../actions/types';
+import {GET_PROFILE, GET_FOLLOWERS, GET_FOLLOWING} from '../actions/types';
 
 const initialState = {
     profile: null,
@@ -12,6 +12,16 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 profile: action.payload
+            };
+        case GET_FOLLOWERS:
+            return {
+                ...state,
+                followers: action.payload
+            };
+        case GET_FOLLOWING:
+            return {
+                ...state,
+                following: action.payload
             };
         default:
             //the reducer 'returns' to the store
