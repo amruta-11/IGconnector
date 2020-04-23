@@ -28,7 +28,7 @@ class Profile extends Component {
         //If we have to get current users profile we will use (this.props.username) & load ProfileInfo & ProfilePost
         //& if we have to get other users profile we will user (this.props.match.params.username) & load ProfileInfoOther & ProfilePost
         //& finally loading the profileContent with which ever is true from above two
-            if (this.props.match.params.username) {
+            if (this.props.match.params.username != this.props.username) {
               //To get other User's Profile
               profileContent = (
                 <main id= "profile">
