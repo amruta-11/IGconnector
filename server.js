@@ -5,9 +5,10 @@ const profile = require('./routes/api/profile');
 const post = require('./routes/api/post');
 const bodyparser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 
 const app = express();
-const port = 5600;
+const port = process.env.PORT || 5600;
 
 //Passport Middleware
 app.use(passport.initialize());
@@ -33,5 +34,12 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 //PostsRoute
 app.use("/api/post", post);
+
+if (process.env.NODE_ENV === 'production')
+//set static folder
+app.use(express.static('client/build'));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+})
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
