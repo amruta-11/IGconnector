@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
-const User = require('../../models/User')
+const User = require('../../models/User');
 const Post = require('../../models/Post');
 const validatePostInput = require('../../validation/post')
-const Comment = require('../../models/Comment')
+const IGComment = require('../../models/Comment')
 
 
 //@route  GET 'api/post'
@@ -230,7 +230,7 @@ router.post(
 
     Post.findById(req.params.postid)
       .then(post => {        
-        const newComment = new Comment ({
+        const newComment = new IGComment ({
           content: req.body.content,
           userId: req.user._id,
           postId: req.params.postid
@@ -278,7 +278,7 @@ router.delete(
   '/comment/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Comment.findById(req.params.id)
+    IGComment.findById(req.params.id)
     .then(comment => {
       if (comment.userId.toString() !== req.user.id) {
         return res

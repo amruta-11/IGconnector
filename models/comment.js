@@ -22,4 +22,4 @@ const CommentSchema = new Schema({
     },
 });
 
-module.exports = Comment = mongoose.model('commentTable', CommentSchema);
+module.exports = IGComment = mongoose.model('commentTable', CommentSchema);
