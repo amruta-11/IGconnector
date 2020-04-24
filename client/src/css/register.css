@@ -27,7 +27,7 @@
 
 @media screen and (max-width: 700px) {
   .signup__form input input:focus input[type=submit], .signup__box, .signup__divider, .signup__appstores, .signup__appstore, .signup__divider:before, .signup__divider:after, .signup__box:first-child, .signup__link, .signup__link--small{
-    width: 120%;
+    width: 100%;
     margin-top: 0;
   }
 }
