@@ -10,10 +10,10 @@ import axios from 'axios';
 
 
 // Edit Profile Action
-export const editProfile = (profileData, history) => dispatch => {
+export const editProfile = (profileData, username, history) => dispatch => {
     axios
       .post('/api/profile/edit', profileData)
-      .then(res => history.push('/profile/'))
+      .then(res => history.push('/profile/' + username))
       .catch(err =>
         dispatch({
           type: GET_ERRORS,

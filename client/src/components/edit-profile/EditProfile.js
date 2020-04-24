@@ -38,7 +38,7 @@ class EditProfile extends Component {
         };
 
         //Here we will be triggering the 'editProfile' Action & passing the profileData to it & history property
-        this.props.editProfile(profileData, this.props.history); 
+        this.props.editProfile(profileData, this.props.username, this.props.history); 
     }
 
 
@@ -117,6 +117,7 @@ EditProfile.propTypes = {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
+    username: state.auth.user.username,
     errors: state.errors
 })
 
