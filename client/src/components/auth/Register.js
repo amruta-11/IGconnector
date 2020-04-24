@@ -59,7 +59,6 @@ class Register extends Component {
         return (
             <main id="signup">
             <div className="signup__column">
-
                 <div className="signup__box">
                     <img src={require('../../img/chitraflogo.png')} className="insta__logo" />
                     <h3 className="signup__logo">Sign up to see photos and videos from your friends.</h3>
@@ -137,7 +136,7 @@ class Register extends Component {
                         <img src={require('../../img/android.png')} className="signup__appstore" alt="Android appstore logo" title="Android appstore logo" />
                     </div>
                 </div>
-            </div>
+            </div> 
         </main>
 
         )

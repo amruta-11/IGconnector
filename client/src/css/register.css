@@ -7,8 +7,9 @@
 }
 
 #signup .signup__column {
-  width: 45%;
+  width: 50%;
 }
+
 
 .signup__column .signup__box {
   background-color: white;
@@ -22,6 +23,13 @@
   flex-direction: column;
   align-items: center;
   margin-top: 35px;
+}
+
+@media screen and (max-width: 700px) {
+  .signup__form input input:focus input[type=submit], .signup__box, .signup__divider, .signup__appstores, .signup__appstore, .signup__divider:before, .signup__divider:after, .signup__box:first-child, .signup__link, .signup__link--small{
+    width: 120%;
+    margin-top: 0;
+  }
 }
 
 .signup__column .signup__appstores {
@@ -51,9 +59,10 @@
   height: 40px;
   display: flex;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 
-.signup__form input {
+.signup__column .signup__form input {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -66,13 +75,13 @@
   margin-bottom: 5px;
 }
 
-.signup__form input:focus {
+.signup__column .signup__form input:focus {
   outline: none;
   border: 1px solid #a9a9a9;
 }
 
 
-.signup__form input[type="submit"] {
+.signup__column .signup__form input[type="submit"] {
   background-color: #3f99ed;
   border: 0;
   padding: 5px;
@@ -102,7 +111,7 @@
   margin-top: 30px;
 }
 
-.signup__box a {
+#signup .signup__box a {
   text-decoration: none;
   color: var(--fd-blue);
 }
@@ -126,3 +135,5 @@
   right: 0;
   top: 10px;
 }
+
+
