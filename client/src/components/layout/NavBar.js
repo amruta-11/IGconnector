@@ -4,8 +4,6 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {logoutUser} from '../../actions/authActions';
-// import {getUserList} from '../../actions/authActions';
-
 
 class NavBar extends Component {
     onLogoutClick(e){
@@ -19,8 +17,11 @@ class NavBar extends Component {
         if(location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/') {
             return null;
         }
+        
+        const username = this.props.auth.user.username;
 
         return (
+           
             //Logo
             <nav className="navigation">
                 <div className="navigation__column">
@@ -45,7 +46,8 @@ class NavBar extends Component {
 
                  {/* Go to Profile Icon */}
                         <li className="navigation__list-item">
-                            <Link to={"/profile/" + this.props.auth.user.username} className="navigation__link">
+                            <Link to={"/profile/" + username} 
+                            className="navigation__link">
                             <i className="fas fa-user-alt" 
                             title="My Profile"></i>
                             </Link>

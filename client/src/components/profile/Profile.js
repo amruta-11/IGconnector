@@ -14,6 +14,21 @@ import ProfileInfoOther from './ProfileInfoOther';
 
 
 class Profile extends Component {
+
+    componentDidMount() {
+      let usernameLocal = this.props.match.params.username;
+      if (usernameLocal !== null) {
+        this.props.getProfileByUsername(usernameLocal);
+        this.props.getPostByUsername(usernameLocal);
+      }       
+    }
+    componentWillReceiveProps(nextProps){
+      if (this.props.match.params.username !== nextProps.match.params.username) {
+        this.props.getProfileByUsername(nextProps.match.params.username);
+        this.props.getPostByUsername(nextProps.match.params.username);
+      }
+    }
+
       render() {
         const profile = this.props.mappedProfile;
         const posts = this.props.mappedPost;
@@ -28,7 +43,7 @@ class Profile extends Component {
         //If we have to get current users profile we will use (this.props.username) & load ProfileInfo & ProfilePost
         //& if we have to get other users profile we will user (this.props.match.params.username) & load ProfileInfoOther & ProfilePost
         //& finally loading the profileContent with which ever is true from above two
-            if (this.props.match.params.username != this.props.loggedInUsername) {
+            if (this.props.match.params.username !== this.props.loggedInUsername) {
               //To get other User's Profile
               profileContent = (
                 <main id= "profile">
@@ -63,22 +78,8 @@ class Profile extends Component {
             </div>
           </div>
         )
-    }
-
-    //Here also, we will be checking if the profile is for current user or other user & store it in variable usernameLocal & passing it to the actions
-    componentDidMount() {
-      let usernameLocal = null;
-      if (this.props.match.params.username) {
-        usernameLocal = this.props.match.params.username;
-      } else if (this.props.username) {
-        usernameLocal = this.props.username;
-      }
-
-      if (usernameLocal !== null) {
-        this.props.getProfileByUsername(usernameLocal);
-        this.props.getPostByUsername(usernameLocal);
-      }       
-    }
+    }   
+    
 }
 
 Profile.propTypes = {
