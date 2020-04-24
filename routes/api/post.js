@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
-const validatePostInput = require('../../validation/post')
-const IGComment = require('../../models/Comment')
+const validatePostInput = require('../../validation/post');
+const IGComment = require('../../models/Comment');
 
 
 //@route  GET 'api/post'
