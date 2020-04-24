@@ -37,8 +37,10 @@ class CreatePost extends Component {
             content: this.state.content,      
         };
 
+        const username = this.props.username;
+
         //Here we will be triggering the 'editProfile' Action & passing the profileData to it & history property
-        this.props.createPost(postData, this.props.history); 
+        this.props.createPost(postData, username, this.props.history); 
     }
     //React lifecycle Method
      componentWillReceiveProps(nextProps){
@@ -115,7 +117,8 @@ CreatePost.propTypes = {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    errors: state.errors
+    errors: state.errors,
+    username: state.auth.user.username
 })
 
 //createPost is the action

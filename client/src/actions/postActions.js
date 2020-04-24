@@ -41,10 +41,10 @@ export const getAllPost = () => dispatch => {
 }
 
 //Create Post - Action
-export const createPost = (postData, history) => dispatch => {
+export const createPost = (postData, username, history) => dispatch => {
   axios
     .post('/api/post', postData)
-    .then(res => history.push('/profile/'))
+    .then(res => history.push('/profile/' + username))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
