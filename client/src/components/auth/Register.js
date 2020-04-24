@@ -62,7 +62,7 @@ class Register extends Component {
 
                 <div className="signup__box">
                     <img src={require('../../img/chitraflogo.png')} className="insta__logo" />
-                    <img src={require('../../img/signuplogo.PNG')} className="signup__logo"/>
+                    <h3 className="signup__logo">Sign up to see photos and videos from your friends.</h3>
                     <form onSubmit = {this.onSubmit}
                     // Onsubmit function - to save the data in DB & fire axios 
                     method="get" className="signup__form">
@@ -128,7 +128,7 @@ class Register extends Component {
                 </div>
                 <div className="signup__box">
                 <span>Already have an account?</span> 
-                <Link to="/login">Log In</Link>
+                <Link to="/login"> Log In</Link>
                 </div>
                 <div className="signup__box--transparent">
                     <span>Get the app</span>

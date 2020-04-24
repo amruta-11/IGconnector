@@ -49,6 +49,8 @@
 
 .signup__column .signup__logo {
   height: 40px;
+  display: flex;
+  margin-bottom: 5px;
 }
 
 .signup__form input {

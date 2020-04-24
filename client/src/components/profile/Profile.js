@@ -28,7 +28,7 @@ class Profile extends Component {
         //If we have to get current users profile we will use (this.props.username) & load ProfileInfo & ProfilePost
         //& if we have to get other users profile we will user (this.props.match.params.username) & load ProfileInfoOther & ProfilePost
         //& finally loading the profileContent with which ever is true from above two
-            if (this.props.match.params.username != this.props.username) {
+            if (this.props.match.params.username != this.props.loggedInUsername) {
               //To get other User's Profile
               profileContent = (
                 <main id= "profile">
@@ -41,7 +41,7 @@ class Profile extends Component {
                   postArray={posts} />
                 </main>
               );
-            } else if (this.props.username) {
+            } else {
               //To get Current User's Profile
               profileContent = (
                 <main id= "profile">
@@ -91,7 +91,7 @@ Profile.propTypes = {
 const mapStateToProps = state => ({
     mappedProfile: state.profile.profile,
     mappedPost: state.post.posts,
-    username: state.auth.user.username,
+    loggedInUsername: state.auth.user.username,
     currentUserId: state.auth.user.id
   });
 

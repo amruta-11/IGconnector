@@ -99,7 +99,7 @@ class Login extends Component {
 
                 <div className="login__box">
                 <span>Don't have an account?</span> 
-                <Link to="/register">Sign up</Link>
+                <Link to="/register"> Sign up</Link>
                 </div>
                 
                 <div className="login__box--transparent">

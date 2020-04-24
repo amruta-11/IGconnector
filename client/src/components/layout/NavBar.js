@@ -45,7 +45,7 @@ class NavBar extends Component {
 
                  {/* Go to Profile Icon */}
                         <li className="navigation__list-item">
-                            <Link to="/profile" className="navigation__link">
+                            <Link to={"/profile/" + this.props.auth.user.username} className="navigation__link">
                             <i className="fas fa-user-alt" 
                             title="My Profile"></i>
                             </Link>
