@@ -8,7 +8,6 @@ import {getAllPost} from '../../actions/postActions';
 //Sub-Components
 import FeedPost from '../feed-item/FeedPost';
 
-
 class Feed extends Component {
     render() {
         const mappedPost = this.props.mappedPost;
@@ -36,8 +35,6 @@ class Feed extends Component {
 
 Feed.propTypes = {
     getAllPost: PropTypes.func.isRequired
-//  getPostByUsername: PropTypes.func.isRequired,
-//  mappedPost: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

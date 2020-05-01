@@ -1,3 +1,4 @@
+//Acts as a HTML Framework for a comment
 import React, { Component } from 'react';
 
  class FeedComment extends Component {
@@ -11,6 +12,5 @@ import React, { Component } from 'react';
         )
     }
 }
-
 
 export default FeedComment;

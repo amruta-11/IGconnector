@@ -1,7 +1,9 @@
+//Redux Store - It stores the state data
+//Only reducers can write the data to the store
+
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/index'
-
 
 const middleware = [thunk];
 

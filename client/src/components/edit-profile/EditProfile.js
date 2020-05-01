@@ -1,6 +1,7 @@
-//@desc This component allows the logged in user to edit the profile i.e bio & website
+//@desc
+//This component allows the logged in user to edit the profile i.e bio & website
 //After getting the profileData we will passing it to the 'editProfile' action
-//In the 'editProfile' action we will be making an axios call to the api
+//In the 'editProfile' action we will be making an axios call & fire the API
 //The API will run & store that data into mongoDB
 
 //Libraries & Functions

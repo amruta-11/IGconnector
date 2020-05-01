@@ -1,3 +1,7 @@
+//@desc
+//This component will display all the follwers of the given user
+//getFollwers(param - username) Action which will disatch the GET_FOLLOWERS & fire axios & run the API
+//Libraries
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -21,6 +25,7 @@ class FollowersList extends Component {
         }
 
         for(var i = 0; i < followers.length; i++) {
+            //follwersJSX acts like a framework to make a list
             var followersJSX = 
             <li class="explore__user">
                 <div class="explore__user-column">
@@ -31,11 +36,6 @@ class FollowersList extends Component {
                         <span class="explore__full-name">{followers[i].name}</span>
                     </div>
                 </div>
-
-                {/* Follow Button Removed
-                <div class="explore__user-column">
-                    <button>Follow</button>
-                </div> */}
             </li>
             FollowersArray.push(followersJSX);
         }
@@ -49,6 +49,9 @@ class FollowersList extends Component {
     }
     componentDidMount() {
         let usernameLocal = null;
+        //Checking for username
+        //Is it from params?
+        //Is it for loggedIn User
         if (this.props.match.params.username) {
           usernameLocal = this.props.match.params.username;
         } else if (this.props.username) {
@@ -64,6 +67,8 @@ class FollowersList extends Component {
 FollowersList.propTypes = {
     getFollowers: PropTypes.func.isRequired,
 };
+
+//Mapped the Follwers Data into the state from Profile (Profile will be already loaded)
 const mapStateToProps = state => ({
     mappedFollowers: state.profile.followers,
 });

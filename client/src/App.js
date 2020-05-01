@@ -53,9 +53,12 @@ class App extends Component {
         <Route path='/' component={NavBar} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/(|login)" component={Login} />
+        {/* PrivateRoute will allow only the loggedIn User to go to the respective pages */}
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/post/create" component={CreatePost} />
         <PrivateRoute exact path="/feed" component={Feed} />
+        {/* <Switch> returns only one first matching route.
+            'exact' returns any number of routes that match exactly. */}
         <Switch>
         <PrivateRoute exact path="/profile/edit/" component={EditProfile} />
         <PrivateRoute exact path="/profile/:username" component={Profile} />

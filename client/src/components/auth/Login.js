@@ -1,10 +1,16 @@
+//@desc
+//Allows user to login into the account. Uses Email & Password - done two-way binding
+//After getting the data into the state oject, the user data is passed to the 'loginUser' Action
+//This action fires the axios call & runs the post-'api/users/login' api
+//It sends the user data in response, store it in state & set the current user
+//It also sends any errors back, if any & to display errors are mapped to props
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import {connect} from 'react-redux'; //For connecting UI component to the store & actions 
 import {loginUser} from '../../actions/authActions';
 import PropTypes from 'prop-types'; //For loading component with required objects & function
-
 
 class Login extends Component {
     constructor(){

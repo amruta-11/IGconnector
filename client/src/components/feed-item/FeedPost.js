@@ -1,3 +1,11 @@
+//@desc
+//FeedPost Component - Acts like a framework or mold through which all the Post on IG will be passed one by one from a for loop in Feed.js
+//These images passed will be displayed as a strip of Post having - Like, Unlike, Caption, Date, etc.
+//When the loggedIn user wants to comment on the users post, the commentData is passed through the 'addComment' Action that will fire the Post API. Then it will fire the 'getAllPost' Action to get the updated post with new comment
+//The like & unlike feature will work in similar fashion as comment with just one difference of invoking the function by 'onClick'
+//To get the comments of a Post we will pass comment from the for loop & using nested component 'FeedComment' as mold or framework
+
+//Libraries
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -6,8 +14,8 @@ import {connect} from 'react-redux';
 import {likePost} from '../../actions/postActions';
 import {unlikePost} from '../../actions/postActions'; 
 import {addComment} from '../../actions/postActions';
+//Sub-Component or Nested Component
 import FeedComment from './FeedComment';
-
 
 class FeedPost extends Component {
     constructor() {
@@ -64,12 +72,17 @@ class FeedPost extends Component {
         const loggedInUserId = this.props.userid
 
         var likeJSX = "";
+        //To check if the loggedIn user has already like the given post or not
+        //If the likes array of the post includes the loggedIn User i.e liked post = true, then 'onUnlikeClick' function will be invoked with postid being the parameter.
+        //This function will fire the unlikePost Action (postid as parameter)
         if (oneFeedPost.likes.includes(loggedInUserId)){
             likeJSX = <i
                 onClick={() => this.onUnlikeClick(oneFeedPost._id)}
                 className="fa fa-heart fa_custom fa-lg">
             </i>
         } else {
+            //If the likes array of the post does not include the loggedIn User i.e liked post = false, then 'onLikeClick' function will be invoked with postid being the parameter.
+            //This function will fire the likePost Action (postid as parameter)
             likeJSX = <i
                 onClick={() => this.onLikeClick(oneFeedPost._id)}
                 className="fa fa-heart-o fa-lg">

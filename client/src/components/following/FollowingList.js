@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Spinner from "../common/Spinner";
+import { Link } from 'react-router-dom';
 // Actions
 import {getFollowing} from '../../actions/profileActions';
-import { Link } from 'react-router-dom';
 
 class FollowingList extends Component {
     render() {

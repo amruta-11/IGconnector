@@ -1,3 +1,8 @@
+//@desc
+//Register Component registers the new user. Fields - Name, Email, Username, Password & Errors
+//Data is passes to the 'registerUser' action which fires axios call to Post-'api/users/register'
+//After that the withRouter function enables to redirect to login 
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; 
 import classnames from 'classnames';
@@ -5,8 +10,6 @@ import {connect} from 'react-redux'; //For connecting UI component to the store 
 import {registerUser} from '../../actions/authActions';
 import PropTypes from 'prop-types'; //For loading component with required objects & function
 import {withRouter} from 'react-router-dom'; //For routing between one component to other
-
-
 
 class Register extends Component {
     //Constructor is needed to build an object of that class

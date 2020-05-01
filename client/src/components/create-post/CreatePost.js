@@ -1,4 +1,5 @@
-//@desc This component will allow user to add the post - imageURL & content
+//@desc
+//This component will allow user to add the post - imageURL & content
 //The 'createPost' action will make the axios call & fire the API
 //After the user adds the post he will be directed to the Updated Profile Page
 
